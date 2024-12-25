@@ -12,6 +12,11 @@
 #include <rclcpp/rclcpp.hpp>
 
 #include <std_msgs/msg/string.hpp>
+#include <sensor_msgs/msg/image.hpp>
+#include <cv_bridge/cv_bridge.h>
+#include <opencv2/opencv.hpp>
+#include <image_transport/image_transport.hpp>
+#include <filesystem>
 
 #define PUB_PERIOD 300 // Publisher transmission time period [ms]
 
@@ -32,6 +37,7 @@ public:
 
 private:
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr image_publisher_;
 
   rclcpp::TimerBase::SharedPtr pub_timer_;
   void pub_timer_callback(void);

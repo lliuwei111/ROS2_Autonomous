@@ -25,6 +25,10 @@ Publisher::Publisher(const rclcpp::NodeOptions & node_opts)
     "/examples/test_topic",
     rclcpp::QoS(10));
 
+  image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>(
+    "/examples/image",
+    rclcpp::QoS(10));
+
   pub_timer_ = this->create_wall_timer(
     std::chrono::milliseconds(PUB_PERIOD),
     std::bind(
@@ -48,6 +52,16 @@ void Publisher::pub_timer_callback(void)
   new_msg.set__data(new_data);
 
   publisher_->publish(new_msg);
+
+  std::string path = "./image.jpg";
+  cv::Mat image = cv::imread(path, cv::IMREAD_COLOR);
+  if (image.empty()) {
+      RCLCPP_ERROR(this->get_logger(), "Could not read the image.");
+      return;
+  }
+  auto msg = cv_bridge::CvImage(std_msgs::msg::Header(), "bgr8", image).toImageMsg();
+  image_publisher_->publish(*msg);
+  RCLCPP_INFO(this->get_logger(), "Published image.");
 
   // Log something
   pub_cnt_++;
