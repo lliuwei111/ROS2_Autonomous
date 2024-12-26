@@ -22,11 +22,11 @@ Publisher::Publisher(const rclcpp::NodeOptions & node_opts)
   pub_cnt_(0)
 {
   publisher_ = this->create_publisher<std_msgs::msg::String>(
-    "/examples/test_topic",
+    "/ros2_demo/string",
     rclcpp::QoS(10));
 
   image_publisher_ = this->create_publisher<sensor_msgs::msg::Image>(
-    "/examples/image",
+    "/ros2_demo/image",
     rclcpp::QoS(10));
 
   pub_timer_ = this->create_wall_timer(

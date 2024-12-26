@@ -8,14 +8,14 @@
 
 #include <iostream>
 
-#include <pub_sub_components/sub.hpp>
+#include <perception.hpp>
 
 int main(int argc, char ** argv)
 {
   rclcpp::init(argc, argv);
   //! For the options, we pass a default-constructed rvalue.
-  auto sub_node = std::make_shared<pub_sub_components::Subscriber>(rclcpp::NodeOptions());
-  rclcpp::spin(sub_node);
+  auto subNode = std::make_shared<perception::Perception>(rclcpp::NodeOptions());
+  rclcpp::spin(subNode);
   rclcpp::shutdown();
   exit(EXIT_SUCCESS);
 }

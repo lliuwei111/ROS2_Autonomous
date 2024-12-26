@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(pub_sub_components)
+project(perception_component)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
@@ -22,71 +22,51 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_components REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(cv_bridge REQUIRED)
+find_package(image_transport REQUIRED)
+find_package(OpenCV 4 REQUIRED)
 
 #! Composable nodes must be compiled as shared libraries.
 #! Pay attention to the following, new directives, to compile shared libraries,
 #! then to those necessary to register the new plugins.
 
-# Publisher component
-add_library(pub SHARED src/pub.cpp)
-target_compile_definitions(pub PRIVATE COMPOSITION_BUILDING_DLL)
-target_include_directories(pub PUBLIC
+# perception component
+add_library(perception_sdk SHARED src/perception.cpp)
+target_compile_definitions(perception_sdk PRIVATE COMPOSITION_BUILDING_DLL)
+target_include_directories(perception_sdk PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
+  $<INSTALL_INTERFACE:include>
+  /usr/include/opencv4)
 ament_target_dependencies(
-  pub
+  perception_sdk
   rclcpp
   rclcpp_components
   std_msgs)
-rclcpp_components_register_nodes(pub "pub_sub_components::Publisher")
+rclcpp_components_register_nodes(perception_sdk "perception_component")
 
-# Publisher
-add_executable(pub_app src/pub_main.cpp)
-target_include_directories(pub_app PUBLIC
+# perception
+add_executable(perception_swc src/perception_main.cpp)
+target_include_directories(perception_swc PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_link_libraries(pub_app pub)
+  $<INSTALL_INTERFACE:include>
+  /usr/include/opencv4)
+target_link_libraries(perception_swc 
+  perception_sdk
+  ${OpenCV_LIBS})
 ament_target_dependencies(
-  pub_app
-  rclcpp)
-
-# Subscriber component
-add_library(sub SHARED src/sub.cpp)
-target_compile_definitions(sub PRIVATE COMPOSITION_BUILDING_DLL)
-target_include_directories(sub PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  sub
+  perception_swc
   rclcpp
-  rclcpp_components
-  std_msgs)
-rclcpp_components_register_nodes(sub "pub_sub_components::Subscriber")
-
-# Subscriber
-add_executable(sub_app src/sub_main.cpp)
-target_include_directories(sub_app PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_link_libraries(sub_app sub)
-ament_target_dependencies(
-  sub_app
-  rclcpp)
+  cv_bridge
+  sensor_msgs)
 
 # Install components
-install(TARGETS pub
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
-install(TARGETS sub
+install(TARGETS perception_sdk
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-# Install executables
-install(TARGETS pub_app
-  DESTINATION lib/${PROJECT_NAME})
-install(TARGETS sub_app
+install(TARGETS perception_swc
   DESTINATION lib/${PROJECT_NAME})
 
 # Install launch files
