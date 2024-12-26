@@ -27,6 +27,13 @@ Perception::Perception(const rclcpp::NodeOptions & node_opts)
       &Perception::MsgCallback,
       this,
       std::placeholders::_1));
+  mImageSubscriber = this->create_subscription<sensor_msgs::msg::Image>(
+    "/ros2_demo/Image",
+    rclcpp::QoS(10),
+    std::bind(
+      &Perception::ImageMsgCallback,
+      this,
+      std::placeholders::_1));
 
   RCLCPP_INFO(this->get_logger(), "Perception initialized");
 }
@@ -39,6 +46,11 @@ Perception::Perception(const rclcpp::NodeOptions & node_opts)
 void Perception::MsgCallback(const std_msgs::msg::String::SharedPtr msg)
 {
   RCLCPP_INFO(this->get_logger(), msg->data.c_str());
+}
+
+void Perception::ImageMsgCallback(const sensor_msgs::msg::Image::SharedPtr msg)
+{
+  // RCLCPP_INFO(this->get_logger(), msg->data.c_str());
 }
 
 } // namespace perception

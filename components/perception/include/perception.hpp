@@ -37,6 +37,7 @@ private:
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr mSubscriber;
   rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr mImageSubscriber;
   void MsgCallback(const std_msgs::msg::String::SharedPtr msg);
+  void ImageMsgCallback(const sensor_msgs::msg::Image::SharedPtr msg);
 };
 
 } // namespace perception
