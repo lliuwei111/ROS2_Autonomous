@@ -1,13 +1,13 @@
 /**
- * Publisher component declaration.
+ * CAMERA component declaration.
  *
  * Roberto Masocco <robmasocco@gmail.com>
  *
  * May 23, 2024
  */
 
-#ifndef PUB_HPP
-#define PUB_HPP
+#ifndef CAMERA_HPP
+#define CAMERA_HPP
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -23,28 +23,28 @@
 //! There has to be a namespace when declaring a component class,
 //! in order to avoid plugin name clashes with other components.
 //! The name of the namespace should be the name of the package.
-namespace pub_sub_components
+namespace camera
 {
 
 /**
- * Simple publisher node: transmits strings on a topic.
+ * Simple Camera node: transmits strings on a topic.
  */
-class Publisher : public rclcpp::Node
+class Camera : public rclcpp::Node
 {
 public:
   //! To be compatible with component containers, the constructor must have only this argument!
-  Publisher(const rclcpp::NodeOptions & node_opts);
+  Camera(const rclcpp::NodeOptions & node_opts);
 
 private:
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr image_publisher_;
+  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr mPublisher;
+  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr mImagePublisher;
 
-  rclcpp::TimerBase::SharedPtr pub_timer_;
-  void pub_timer_callback(void);
+  rclcpp::TimerBase::SharedPtr mPubTimer;
+  void PubTimerCallback(void);
 
-  unsigned long pub_cnt_; // Marks messages
+  unsigned long mPubCnt; // Marks messages
 };
 
-} // namespace pub_sub_components
+} // namespace camera
 
 #endif

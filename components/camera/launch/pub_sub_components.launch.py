@@ -18,8 +18,8 @@ def generate_launch_description():
     #! Create a ComposableNodeContainer, then add ComposableNode instances to it.
     #! Do not forget the use_intra_process_comms argument!
     container = ComposableNodeContainer(
-        name='pub_sub_container',
-        namespace='pub_sub_components',
+        name='camera_container',
+        namespace='camera_components',
         package='rclcpp_components',
         executable='component_container',
         emulate_tty=True,
@@ -27,17 +27,10 @@ def generate_launch_description():
         log_cmd=True,
         composable_node_descriptions=[
             ComposableNode(
-                package='pub_sub_components',
-                plugin='pub_sub_components::Publisher',
-                name='publisher_node',
-                namespace='pub_sub_components',
-                parameters=[],
-                extra_arguments=[{'use_intra_process_comms': True}]),
-            ComposableNode(
-                package='pub_sub_components',
-                plugin='pub_sub_components::Subscriber',
-                name='subscriber_node',
-                namespace='pub_sub_components',
+                package='camera_components',
+                plugin='camera::Camera',
+                name='camera_node',
+                namespace='camera_components',
                 parameters=[],
                 extra_arguments=[{'use_intra_process_comms': True}])
         ]

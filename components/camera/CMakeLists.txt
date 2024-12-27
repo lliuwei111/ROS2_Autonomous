@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(pub_sub_components)
+project(camera)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
@@ -31,43 +31,44 @@ find_package(OpenCV 4 REQUIRED)
 #! Pay attention to the following, new directives, to compile shared libraries,
 #! then to those necessary to register the new plugins.
 
-# Publisher component
-add_library(pub SHARED src/pub.cpp)
-target_compile_definitions(pub PRIVATE COMPOSITION_BUILDING_DLL)
-target_include_directories(pub PUBLIC
+# camera sdk component
+add_library(camera_sdk SHARED src/camera.cpp)
+target_compile_definitions(camera_sdk PRIVATE COMPOSITION_BUILDING_DLL)
+message("<INSTALL_INTERFACE:include>: ", ${INSTALL_INTERFACE})
+target_include_directories(camera_sdk PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
   /usr/include/opencv4)
 ament_target_dependencies(
-  pub
+  camera_sdk
   rclcpp
   rclcpp_components
   std_msgs)
-rclcpp_components_register_nodes(pub "pub_sub_components::Publisher")
+rclcpp_components_register_nodes(camera_sdk "camera_component")
 
-# Publisher
-add_executable(pub_app src/pub_main.cpp)
-target_include_directories(pub_app PUBLIC
+# camera swc
+add_executable(camera src/camera_main.cpp)
+target_include_directories(camera PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
   /usr/include/opencv4)
-target_link_libraries(pub_app 
-  pub
+target_link_libraries(camera 
+  camera_sdk
   ${OpenCV_LIBS})
 ament_target_dependencies(
-  pub_app
+  camera
   rclcpp
   cv_bridge
   sensor_msgs)
 
 # Install components
-install(TARGETS pub
+install(TARGETS camera_sdk
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
 # Install executables
-install(TARGETS pub_app
+install(TARGETS camera
   DESTINATION lib/${PROJECT_NAME})
 
 # Install launch files

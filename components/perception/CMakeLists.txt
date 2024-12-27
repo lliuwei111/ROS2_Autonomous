@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(perception_component)
+project(perception)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
@@ -46,16 +46,16 @@ ament_target_dependencies(
 rclcpp_components_register_nodes(perception_sdk "perception_component")
 
 # perception
-add_executable(perception_swc src/perception_main.cpp)
-target_include_directories(perception_swc PUBLIC
+add_executable(perception src/perception_main.cpp)
+target_include_directories(perception PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>
   /usr/include/opencv4)
-target_link_libraries(perception_swc 
+target_link_libraries(perception 
   perception_sdk
   ${OpenCV_LIBS})
 ament_target_dependencies(
-  perception_swc
+  perception
   rclcpp
   cv_bridge
   sensor_msgs)
@@ -66,7 +66,7 @@ install(TARGETS perception_sdk
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
 
-install(TARGETS perception_swc
+install(TARGETS perception
   DESTINATION lib/${PROJECT_NAME})
 
 # Install launch files
