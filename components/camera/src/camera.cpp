@@ -1,7 +1,7 @@
 /**
  * Publisher component definition.
  *
- * Roberto Masocco <robmasocco@gmail.com>
+ * wei <542841336@qq.com>
  *
  * May 23, 2024
  */

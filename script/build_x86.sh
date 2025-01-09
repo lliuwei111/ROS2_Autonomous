@@ -73,8 +73,9 @@
 #!/bin/bash
 
 # 设置默认值
+source /opt/ros/foxy/setup.bash
 TARGETS=()
-ALL_TARGETS=("camera" "perception") # 添加所有可能的目标到这里
+ALL_TARGETS=("camera" "perception" "planning" "control") # 添加所有可能的目标到这里
 BUILD_TYPE="Release"
 INSTALL_DIR="${PWD}/install"
 
@@ -110,7 +111,8 @@ cd build || exit
 # 配置 CMake
 cmake .. \
     -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
-    -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR
+    -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR \
+    -DCMAKE_VERBOSE_MAKEFILE=ON
 
 # 编译指定的目标
 for target in "${TARGETS[@]}"; do

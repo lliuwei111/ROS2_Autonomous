@@ -1,13 +1,13 @@
 /**
- * CAMERA component declaration.
+ * Subscriber component declaration.
  *
  * wei <542841336@qq.com>
  *
  * May 23, 2024
  */
 
-#ifndef CAMERA_HPP
-#define CAMERA_HPP
+#ifndef SUB_HPP
+#define SUB_HPP
 
 #include <rclcpp/rclcpp.hpp>
 
@@ -18,33 +18,28 @@
 #include <image_transport/image_transport.hpp>
 #include <filesystem>
 
-#define PUB_PERIOD 300 // Publisher transmission time period [ms]
-
 //! There has to be a namespace when declaring a component class,
 //! in order to avoid plugin name clashes with other components.
 //! The name of the namespace should be the name of the package.
-namespace camera
+namespace planning
 {
 
 /**
- * Simple Camera node: transmits strings on a topic.
+ * Simple planning node: receives and prints strings transmitted on a topic.
  */
-class Camera : public rclcpp::Node
+class planning : public rclcpp::Node
 {
 public:
   //! To be compatible with component containers, the constructor must have only this argument!
-  Camera(const rclcpp::NodeOptions & node_opts);
+  planning(const rclcpp::NodeOptions & node_opts);
 
 private:
-  rclcpp::Publisher<std_msgs::msg::String>::SharedPtr mPublisher;
-  rclcpp::Publisher<sensor_msgs::msg::Image>::SharedPtr mImagePublisher;
-
-  rclcpp::TimerBase::SharedPtr mPubTimer;
-  void PubTimerCallback(void);
-
-  unsigned long mPubCnt; // Marks messages
+  rclcpp::Subscription<std_msgs::msg::String>::SharedPtr mSubscriber;
+  rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr mImageSubscriber;
+  void MsgCallback(const std_msgs::msg::String::SharedPtr msg);
+  void ImageMsgCallback(const sensor_msgs::msg::Image::SharedPtr msg);
 };
 
-} // namespace camera
+} // namespace planning
 
 #endif

@@ -4,7 +4,7 @@
   <name>camera</name>
   <version>0.0.0</version>
   <description>Composable nodes demonstration package.</description>
-  <maintainer email="robmasocco@gmail.com">Roberto Masocco</maintainer>
+  <maintainer email="542841336@qq.com">wei</maintainer>
   <license>GPL-3.0-only</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>

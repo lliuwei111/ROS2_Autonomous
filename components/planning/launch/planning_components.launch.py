@@ -1,7 +1,7 @@
 """
 Component example launch file.
 
-Roberto Masocco <robmasocco@gmail.com>
+wei <542841336@qq.com>
 
 May 23, 2024
 """
@@ -18,8 +18,8 @@ def generate_launch_description():
     #! Create a ComposableNodeContainer, then add ComposableNode instances to it.
     #! Do not forget the use_intra_process_comms argument!
     container = ComposableNodeContainer(
-        name='perception_container',
-        namespace='perception_component',
+        name='planning_container',
+        namespace='planning_component',
         package='rclcpp_components',
         executable='component_container',
         emulate_tty=True,
@@ -27,10 +27,10 @@ def generate_launch_description():
         log_cmd=True,
         composable_node_descriptions=[
             ComposableNode(
-                package='perception_component',
-                plugin='perception_component::Publisher',
-                name='perception_node',
-                namespace='perception_component',
+                package='planning_component',
+                plugin='planning_component::Publisher',
+                name='planning_node',
+                namespace='planning_component',
                 parameters=[],
                 extra_arguments=[{'use_intra_process_comms': True}])
         ]
