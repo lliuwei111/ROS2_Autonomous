@@ -26,15 +26,11 @@ Camera::Camera(const rclcpp::NodeOptions & node_opts)
     rclcpp::QoS(10));
 
   mImagePublisher = this->create_publisher<sensor_msgs::msg::Image>(
-    "/ros2_demo/image",
+    "/ros2_demo/camera/image",
     rclcpp::QoS(10));
 
-  mPubTimer = this->create_wall_timer(
-    std::chrono::milliseconds(PUB_PERIOD),
-    std::bind(
-      &Camera::PubTimerCallback,
-      this));
-
+  mPubTimer = this->create_wall_timer(std::chrono::milliseconds(PUB_PERIOD),
+    std::bind(&Camera::PubTimerCallback, this));
   RCLCPP_INFO(this->get_logger(), "Publisher initialized");
 }
 

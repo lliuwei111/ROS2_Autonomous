@@ -43,10 +43,19 @@ public:
   Perception(const rclcpp::NodeOptions & node_opts);
 
 private:
+  // subscription
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr mSubscriber;
   rclcpp::Subscription<sensor_msgs::msg::Image>::SharedPtr mImageSubscriber;
+  rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr mOdometrySubscriber;
+  rclcpp::Subscription<sensor_msgs::msg::PointCloud2>::SharedPtr mPointCloud2Subscriber;
+
+  // publisher
+  rclcpp::Publisher<geometry_msgs::msg::PoseArray>::SharedPtr mPoseArrayPublisher;
+  rclcpp::Publisher<vision_msgs::msg::Detection2DArray>::SharedPtr mDetection2DArrayPublisher;
+
   void MsgCallback(const std_msgs::msg::String::SharedPtr msg);
   void ImageMsgCallback(const sensor_msgs::msg::Image::SharedPtr msg);
+  void OdomtryMsgCallback(const nav_msgs::msg::Odometry::SharedPtr msg);
 };
 
 } // namespace perception

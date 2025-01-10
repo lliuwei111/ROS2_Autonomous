@@ -28,10 +28,18 @@ Perception::Perception(const rclcpp::NodeOptions & node_opts)
       this,
       std::placeholders::_1));
   mImageSubscriber = this->create_subscription<sensor_msgs::msg::Image>(
-    "/ros2_demo/Image",
+    "/ros2_demo/camera/Image",
     rclcpp::QoS(10),
     std::bind(
       &Perception::ImageMsgCallback,
+      this,
+      std::placeholders::_1));
+
+  mOdometrySubscriber = this->create_subscription<nav_msgs::msg::Odometry>(
+    "/ros2_demo/camera/Image",
+    rclcpp::QoS(10),
+    std::bind(
+      &Perception::OdomtryMsgCallback,
       this,
       std::placeholders::_1));
 
@@ -50,8 +58,13 @@ void Perception::MsgCallback(const std_msgs::msg::String::SharedPtr msg)
 
 void Perception::ImageMsgCallback(const sensor_msgs::msg::Image::SharedPtr msg)
 {
-  // RCLCPP_INFO(this->get_logger(), msg->data.c_str());
+  RCLCPP_INFO(this->get_logger(), "Receive Image msg");
 }
+
+void Perception::OdomtryMsgCallback(const nav_msgs::msg::Odometry::SharedPtr msg) {
+  RCLCPP_INFO(this->get_logger(), "receive odomtry msg!");
+}
+
 
 } // namespace perception
 

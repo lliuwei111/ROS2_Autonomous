@@ -46,7 +46,10 @@ ament_target_dependencies(
   perception_sdk
   rclcpp
   rclcpp_components
-  std_msgs)
+  std_msgs
+  nav_msgs
+  geometry_msgs
+  sensor_msgs)
 rclcpp_components_register_nodes(perception_sdk "perception_component")
 
 # perception
