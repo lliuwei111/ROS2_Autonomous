@@ -13,6 +13,7 @@
 
 #include <std_msgs/msg/string.hpp>
 #include <sensor_msgs/msg/image.hpp>
+#include "sensor_msgs/msg/image.hpp" // 相机内参信息。
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
 #include <image_transport/image_transport.hpp>

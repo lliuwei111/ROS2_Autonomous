@@ -18,6 +18,15 @@
 #include <image_transport/image_transport.hpp>
 #include <filesystem>
 
+// 感知输入
+#include "sensor_msgs/msg/image.hpp"
+#include "nav_msgs/msg/odometry.hpp" // 位姿估计消息
+#include "sensor_msgs/msg/point_cloud2.hpp" // 经过处理后的点云（例如分割后的点云）也是输出
+
+// 感知输出
+#include "vision_msgs/msg/detection2_d_array.hpp" // 2D 检测结果
+#include "geometry_msgs/msg/pose_array.hpp" //  检测到的对象姿态集合。
+
 //! There has to be a namespace when declaring a component class,
 //! in order to avoid plugin name clashes with other components.
 //! The name of the namespace should be the name of the package.

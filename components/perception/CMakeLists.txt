@@ -26,6 +26,10 @@ find_package(sensor_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
 find_package(OpenCV 4 REQUIRED)
+find_package(ament_cmake REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(vision_msgs REQUIRED)
 
 #! Composable nodes must be compiled as shared libraries.
 #! Pay attention to the following, new directives, to compile shared libraries,

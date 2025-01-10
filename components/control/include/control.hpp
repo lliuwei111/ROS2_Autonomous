@@ -17,6 +17,11 @@
 #include <opencv2/opencv.hpp>
 #include <image_transport/image_transport.hpp>
 #include <filesystem>
+// 输入
+#include "nav_msgs/msg/path.hpp" // 来自规划模块的路径。
+#include "sensor_msgs/msg/joint_state.hpp"
+#include "geometry_msgs/msg/twist.hpp"
+#include "std_msgs/msg/float64_multi_array.hpp"
 
 //! There has to be a namespace when declaring a component class,
 //! in order to avoid plugin name clashes with other components.

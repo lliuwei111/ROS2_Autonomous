@@ -11,12 +11,20 @@
 
 #include <rclcpp/rclcpp.hpp>
 
-#include <std_msgs/msg/string.hpp>
 #include <sensor_msgs/msg/image.hpp>
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/opencv.hpp>
 #include <image_transport/image_transport.hpp>
 #include <filesystem>
+
+// 输入
+#include "geometry_msgs/msg/pose_stamped.hpp" // 当前位置
+#include "nav_msgs/msg/occupancy_grid.hpp" // 地图数据。
+#include <std_msgs/msg/string.hpp>  // 目标位置或其他任务指令。
+
+// 输出
+#include "nav_msgs/msg/path.hpp"// 规划好的路径。
+#include "action_msgs/msg/goal_status_array.hpp" // 动作执行状态。
 
 //! There has to be a namespace when declaring a component class,
 //! in order to avoid plugin name clashes with other components.
